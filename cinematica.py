@@ -16,17 +16,15 @@ def get_cinema_from_site(cinemas, url):
     soup = BeautifulSoup(response_data, 'lxml')
     soup = soup.find_all('div', class_='cinemaList_item')
     cinemas.clear()
-    exclude = [2, 3, 7, 10, 12]
     for i, m in enumerate(soup, start=1):
-        if i not in exclude:
-            cinemas.append(
-                {
-                    'id': f'{i}',
-                    'name': m.findChildren('div', class_='cinemaList_name')[0].text,
-                    'url': m.findChildren('a', class_='cinemaList_ref')[0].get('href')
+        cinemas.append(
+            {
+                'id': f'{i}',
+                'name': m.findChildren('div', class_='cinemaList_name')[0].text,
+                'url': m.findChildren('a', class_='cinemaList_ref')[0].get('href')
 
-                }
-            )
+            }
+        )
 
 
 def get_movie_date(movie_date, url):

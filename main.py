@@ -48,12 +48,18 @@ def callback_movie_date_handler(query):
             markup = types.InlineKeyboardMarkup()
             url = date.get('url')
             get_movie_date(movie_date, url)
-            for day in movie_date:
-                day_ids.append(day.get('id'))
-                button = types.InlineKeyboardButton(day.get('name'),
-                                                    callback_data=day.get('id'))
-                markup.add(button)
-            bot.send_message(query.from_user.id, 'Выберите дату', reply_markup=markup)
+
+            if not movie_date:
+                text = f'Извините, в данный момент на сайте нет ближайших сеансов в кинотеатре {date.get("name")}'
+                bot.send_message(query.from_user.id, text)
+            else:
+                text = f'Выберите дату на сеанс в кинотетре {date.get("name")}'
+                for day in movie_date:
+                    day_ids.append(day.get('id'))
+                    button = types.InlineKeyboardButton(day.get('name'),
+                                                        callback_data=day.get('id'))
+                    markup.add(button)
+                bot.send_message(query.from_user.id, text, reply_markup=markup)
 
 
 @bot.callback_query_handler(lambda query: query.data in day_ids)
