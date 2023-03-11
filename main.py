@@ -38,7 +38,7 @@ def get_cinema(message):
                                             callback_data=cin.get('id'))
         markup.add(button)
 
-    bot.send_message(message.chat.id, 'Здравствуйте, выберите кинотеатр', reply_markup=markup)
+    bot.send_message(message.chat.id, 'Выберите кинотеатр', reply_markup=markup)
 
 
 @bot.callback_query_handler(lambda query: query.data in cinema_ids)
